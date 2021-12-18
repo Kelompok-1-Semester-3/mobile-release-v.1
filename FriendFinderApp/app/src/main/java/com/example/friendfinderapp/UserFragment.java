@@ -1,6 +1,9 @@
 package com.example.friendfinderapp;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -9,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
@@ -30,6 +34,7 @@ import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.friendfinderapp.API.APIRequestData;
 import com.example.friendfinderapp.API.RetroServer;
+import com.example.friendfinderapp.Activity.SignIn;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
 import com.example.friendfinderapp.Model.UserAccount;
 
@@ -51,6 +56,7 @@ public class UserFragment extends Fragment {
     private EditText et_user_name, et_contact_person, et_email_user;
     private String profile, fullname, phone, email;
     private Bitmap bitmap;
+     private Button btn_user_logout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +67,7 @@ public class UserFragment extends Fragment {
         et_contact_person = view.findViewById(R.id.et_contact_person);
         et_email_user = view.findViewById(R.id.et_email_user);
         iv_user_profile= view.findViewById(R.id.iv_user_profile);
+        btn_user_logout = view.findViewById(R.id.btn_user_logout);
         Button btn_choose_user_profile = view.findViewById(R.id.btn_choose_user_profile);
 
         getDetailAccount();
@@ -99,6 +106,37 @@ public class UserFragment extends Fragment {
             };
             RequestQueue requestQueue = Volley.newRequestQueue(getContext());
             requestQueue.add(request);
+        });
+
+        btn_user_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                dialog.setMessage("Apakah anda yakin akan log Out ? ");
+                dialog.setCancelable(true);
+
+                DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case DialogInterface.BUTTON_POSITIVE:
+                                SharedPreferences preferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                                preferences.edit().clear().commit();
+                                startActivity(new Intent(getContext(), SignIn.class));
+                                Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_SHORT).show();
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                Toast.makeText(getActivity(), "Batal logOut", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                };
+                dialog.setPositiveButton("Logout", onClickListener);
+                dialog.setNegativeButton("Batal", onClickListener);
+                AlertDialog alertDialog = dialog.create();
+                alertDialog.show();
+            }
         });
 
         return view;

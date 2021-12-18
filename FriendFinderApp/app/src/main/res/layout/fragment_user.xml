@@ -146,6 +146,18 @@
             android:textColor="@color/white"
             android:fontFamily="@font/poppinssemibold"
             android:layout_marginTop="32dp"/>
+
+         <Button
+             android:id="@+id/btn_user_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+             android:background="@color/lightRed"
+            android:text="Log Out"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:fontFamily="@font/poppinssemibold"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 
 </ScrollView>

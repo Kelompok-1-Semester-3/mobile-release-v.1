@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.bumptech.glide.Glide;
 import com.example.friendfinderapp.API.APIRequestData;
@@ -32,6 +33,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
     private final List<userEvent> events = new ArrayList<>();
 
     FloatingActionButton btn_add_new_event;
+      public SwipeRefreshLayout swl_refresh;
 
     // recycler view init
     private RecyclerView recyclerViewEvent;
@@ -44,6 +46,13 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
         // init
         TextView txt_user_name = view.findViewById(R.id.txt_user_name);
         ImageView iv_user_profile = view.findViewById(R.id.iv_user_profile);
+        swl_refresh = view.findViewById(R.id.swl_refresh);
+
+         swl_refresh.setOnRefreshListener(() -> {
+            swl_refresh.setRefreshing(true);
+            addEventItem();
+            swl_refresh.setRefreshing(false);
+        });
 
         txt_user_name.setText(ConfigurationAll.fullname);
         Glide.with(EventFragment.this).load(ConfigurationAll.ImageURL + ConfigurationAll.profile)

@@ -58,4 +58,10 @@ public interface APIRequestData {
     @GET("API/getDetailAccount/{id}")
     Call<UserAccount> resGetDetailAccount(@Path("id") String id);
 
+     @FormUrlEncoded
+    @POST("API/UserEventDestroy")
+    Call<ResponseModel> DistroyUserEvent(
+            @Field("id") int id
+    );
+
 }

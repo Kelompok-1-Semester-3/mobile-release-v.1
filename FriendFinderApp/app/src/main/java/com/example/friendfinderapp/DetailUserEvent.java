@@ -1,5 +1,6 @@
 package com.example.friendfinderapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -16,6 +18,7 @@ import com.bumptech.glide.Glide;
 import com.example.friendfinderapp.API.APIRequestData;
 import com.example.friendfinderapp.API.RetroServer;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
+import com.example.friendfinderapp.Model.ResponseModel;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +26,9 @@ import retrofit2.Response;
 
 public class DetailUserEvent extends AppCompatActivity {
 
-    private String id;
+    private int id;
+    private  TextView detail_event_name;
+    private  String event_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +37,20 @@ public class DetailUserEvent extends AppCompatActivity {
 
         // init
         ImageView btn_back_to_see_all = findViewById(R.id.btn_back_to_see_all);
-        TextView detail_event_name = findViewById(R.id.detail_event_name);
+        detail_event_name = findViewById(R.id.detail_event_name);
         ImageView detail_event_image = findViewById(R.id.detail_event_image);
         TextView detail_event_date = findViewById(R.id.detail_event_date);
         TextView detail_contact_person = findViewById(R.id.detail_contact_person);
         TextView detail_owner_name = findViewById(R.id.detail_owner_name);
         TextView detail_description = findViewById(R.id.detail_description);
         CardView btn_edit_event = findViewById(R.id.btn_edit_event);
+        CardView btn_delete_event_user = findViewById(R.id.btn_delete_event);
 
         btn_edit_event.setOnClickListener(v -> getDetailEvent());
 
         // get parsing data
         if (getIntent() != null) {
-            id = getIntent().getStringExtra("id");
+            id = Integer.parseInt(getIntent().getStringExtra("id"));
             String event_name = getIntent().getStringExtra("event_name");
             String event_picture = getIntent().getStringExtra("event_picture");
             String start_date = getIntent().getStringExtra("start_date");
@@ -75,6 +81,34 @@ public class DetailUserEvent extends AppCompatActivity {
             }
 
         });
+        btn_delete_event_user.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                kurang refresh
+
+                AlertDialog.Builder dialogPesan = new AlertDialog.Builder(DetailUserEvent.this);
+                dialogPesan.setMessage("Apakah anda yakin akan menghapus Event " + event_name);
+                dialogPesan.setCancelable(true);
+
+                DialogInterface.OnClickListener diaOnClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                DeletUserEvent();
+                                break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                break;
+                        }
+                    }
+                };
+                dialogPesan.setPositiveButton("Hapus", diaOnClickListener);
+                dialogPesan.setNegativeButton("Cancel", diaOnClickListener);
+                AlertDialog dialog = dialogPesan.create();
+                dialog.show();
+            }
+        });
     }
 
     private void getDetailEvent() {
@@ -103,6 +137,27 @@ public class DetailUserEvent extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Call<userEvent> call, Throwable t) {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    public void DeletUserEvent() {
+        APIRequestData apiRequestData = RetroServer.konekRetro().create(APIRequestData.class);
+        Call<ResponseModel> distroy = apiRequestData.DistroyUserEvent(id);
+        distroy.enqueue(new Callback<ResponseModel>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseModel> call, @NonNull Response<ResponseModel> response) {
+                assert response.body() != null;
+                String Pesan = response.body().getPesan();
+
+                Toast.makeText(getApplicationContext(), Pesan, Toast.LENGTH_SHORT).show();
+                getOnBackPressedDispatcher().onBackPressed();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseModel> call, @NonNull Throwable t) {
+
+                Toast.makeText(getApplicationContext(), "Koneksi gagal ", Toast.LENGTH_SHORT).show();
+
             }
         });
     }
