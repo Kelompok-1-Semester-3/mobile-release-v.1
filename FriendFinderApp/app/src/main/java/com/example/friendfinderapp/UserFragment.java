@@ -104,7 +104,7 @@ public class UserFragment extends Fragment {
                     return map;
                 }
             };
-            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
             requestQueue.add(request);
         });
 
