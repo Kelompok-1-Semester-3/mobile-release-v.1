@@ -1,14 +1,12 @@
 package com.example.friendfinderapp.API;
 
-import com.example.friendfinderapp.Category;
 import com.example.friendfinderapp.Model.CategoryModel;
 import com.example.friendfinderapp.Model.Event_Model;
 import com.example.friendfinderapp.Model.ResponseModel;
 import com.example.friendfinderapp.Model.UserAccount;
-import com.example.friendfinderapp.Model.User_Model;
+import com.example.friendfinderapp.PlaceList;
 import com.example.friendfinderapp.userEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -58,10 +56,12 @@ public interface APIRequestData {
     @GET("API/getDetailAccount/{id}")
     Call<UserAccount> resGetDetailAccount(@Path("id") String id);
 
-     @FormUrlEncoded
+    @FormUrlEncoded
     @POST("API/UserEventDestroy")
-    Call<ResponseModel> DistroyUserEvent(
-            @Field("id") int id
-    );
+    Call<ResponseModel> DistroyUserEvent(@Field("id") int id);
+
+    @GET("API/getPlaceByKeyword/{keyword}")
+    Call<List<PlaceList>> resGetPlaceByKeyword(@Path("keyword") String keyword);
+
 
 }
