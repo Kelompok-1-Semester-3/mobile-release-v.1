@@ -31,10 +31,8 @@ import retrofit2.Response;
 public class EventFragment extends Fragment implements EventAdapter.OnEventListener, userEventAdapter.onUserEventListener {
 
     private final List<userEvent> events = new ArrayList<>();
-
+    public SwipeRefreshLayout swl_refresh;
     FloatingActionButton btn_add_new_event;
-      public SwipeRefreshLayout swl_refresh;
-
     // recycler view init
     private RecyclerView recyclerViewEvent;
 
@@ -48,7 +46,7 @@ public class EventFragment extends Fragment implements EventAdapter.OnEventListe
         ImageView iv_user_profile = view.findViewById(R.id.iv_user_profile);
         swl_refresh = view.findViewById(R.id.swl_refresh);
 
-         swl_refresh.setOnRefreshListener(() -> {
+        swl_refresh.setOnRefreshListener(() -> {
             swl_refresh.setRefreshing(true);
             addEventItem();
             swl_refresh.setRefreshing(false);

@@ -6,10 +6,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,6 +26,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.example.friendfinderapp.API.APIRequestData;
+import com.example.friendfinderapp.API.RetroServer;
 import com.example.friendfinderapp.Constants.ConfigurationAll;
 
 import org.json.JSONArray;
@@ -29,6 +36,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +52,7 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
     //    private ArrayList<Category> categories;
     private List<Event> events = new ArrayList<>();
     private List<ThumbnailPlace> thumbnailPlaces = new ArrayList<>();
+    CardView btn_search_event;
 
     // recycler view init
     RecyclerView recyclerViewEvent, recyclerViewThumbnailEvent, recyclerViewThumbnailPlace;
@@ -59,6 +70,56 @@ public class HomeFragment extends Fragment implements EventAdapter.OnEventListen
         // init
         TextView tvNama = view.findViewById(R.id.tvNama);
         ImageView iv_user_profile = view.findViewById(R.id.iv_user_profile);
+        EditText txt_keyword = view.findViewById(R.id.txt_keyword);
+        btn_search_event = view.findViewById(R.id.btn_search_event);
+        RelativeLayout header_thumbnail_event = view.findViewById(R.id.header_thumbnail_event);
+        RelativeLayout header_thumbnail_place = view.findViewById(R.id.header_thumbnail_place);
+
+        CardView btn_search_event = view.findViewById(R.id.btn_search_event);
+        btn_search_event.setOnClickListener(v -> {
+            header_thumbnail_event.setVisibility(View.GONE);
+            header_thumbnail_place.setVisibility(View.GONE);
+            recyclerViewThumbnailEvent.setVisibility(View.GONE);
+            recyclerViewThumbnailPlace.setVisibility(View.GONE);
+
+            events.clear();
+            if (String.valueOf(txt_keyword.getText()).equals("")) {
+                addEventItem();
+            } else {
+                APIRequestData apiRequestData = RetroServer.konekRetro().create(APIRequestData.class);
+                Call<List<userEvent>> call = apiRequestData.resEventByKeyword(String.valueOf(txt_keyword.getText()));
+                call.enqueue(new Callback<List<userEvent>>() {
+                    @Override
+                    public void onResponse(@NonNull Call<List<userEvent>> call, @NonNull retrofit2.Response<List<userEvent>> response) {
+                        List<userEvent> userEvents = response.body();
+                        assert userEvents != null;
+                        for (userEvent userEvent : userEvents) {
+                            String id = userEvent.getId();
+                            String name_event = userEvent.getName_event();
+                            String event_owner = userEvent.getEvent_owner();
+                            String contact_person = userEvent.getContact_person();
+                            String description = userEvent.getDescription();
+                            String event_picture = userEvent.getEvent_picture();
+                            String event_start_date = userEvent.getEvent_start_date();
+                            String event_end_date = userEvent.getEvent_end_date();
+                            String price = userEvent.getPrice();
+                            String location = userEvent.getLocation();
+                            String category = userEvent.getCategory();
+                            Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
+                            events.add(event);
+                        }
+                        EventAdapter eventAdapter = new EventAdapter(events, HomeFragment.this);
+                        recyclerViewEvent.setAdapter(eventAdapter);
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<List<userEvent>> call, @NonNull Throwable t) {
+                        Toast.makeText(getContext(), "Data Not found!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
 
         // set data
         tvNama.setText(ConfigurationAll.fullname);
