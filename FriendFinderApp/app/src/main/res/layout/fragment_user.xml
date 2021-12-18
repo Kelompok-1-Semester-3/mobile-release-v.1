@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="30dp"
-    android:layout_marginVertical="40dp"
+    android:layout_marginTop="40dp"
     android:scrollbars="none"
     tools:context=".UserFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         tools:ignore="ExtraText">
 
@@ -136,30 +136,43 @@
                 tools:ignore="RtlSymmetry,TextFields" />
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_update_account"
+        <RelativeLayout
+            android:layout_marginTop="40dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/button_primary"
-            android:fontFamily="@font/poppinssemibold"
-            android:paddingHorizontal="16dp"
-            android:text="Save Changes"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+            android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/btn_user_logout"
-            android:backgroundTint="@color/lightRed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/button_primary"
-            android:fontFamily="@font/poppinssemibold"
-            android:paddingHorizontal="16dp"
-            android:text="Log Out"
-            android:textAllCaps="false"
-            android:textColor="@color/white" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_update_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="32dp"
+                    android:background="@drawable/button_primary"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:paddingHorizontal="16dp"
+                    android:text="Save Changes"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+                <Button
+                    android:id="@+id/btn_user_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/button_primary"
+                    android:backgroundTint="@color/lightRed"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:paddingHorizontal="16dp"
+                    android:text="Log Out"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 
 </ScrollView>
