@@ -2,7 +2,6 @@ package com.example.friendfinderapp;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -21,8 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.friendfinderapp.API.APIRequestData;
@@ -48,7 +46,7 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
 
     private List<Event> events = new ArrayList<>();
 
-    // recycler view init   
+    // recycler view init
     RecyclerView recyclerViewEvent;
 
     @Override
@@ -63,12 +61,7 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
 
         // event
         // back to home
-        btn_back_to_home.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.homeFragment);
-            }
-        });
+        btn_back_to_home.setOnClickListener(v -> navController.navigate(R.id.homeFragment));
 
         // categories
         /*
@@ -114,8 +107,9 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
                 Call<List<userEvent>> call = apiRequestData.resEventByKeyword(String.valueOf(txt_search_event.getText()));
                 call.enqueue(new Callback<List<userEvent>>() {
                     @Override
-                    public void onResponse(Call<List<userEvent>> call, retrofit2.Response<List<userEvent>> response) {
+                    public void onResponse(@NonNull Call<List<userEvent>> call, @NonNull retrofit2.Response<List<userEvent>> response) {
                         List<userEvent> userEvents = response.body();
+                        assert userEvents != null;
                         for (userEvent userEvent : userEvents) {
                             String id = userEvent.getId();
                             String name_event = userEvent.getName_event();
@@ -137,7 +131,7 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
                     }
 
                     @Override
-                    public void onFailure(Call<List<userEvent>> call, Throwable t) {
+                    public void onFailure(@NonNull Call<List<userEvent>> call, @NonNull Throwable t) {
                         Toast.makeText(getContext(), "Data Not found!", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -155,44 +149,36 @@ public class HomeSeeAllFragment extends Fragment implements EventAdapter.OnEvent
 
     // add event item
     private void addEventItem() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, ConfigurationAll.EVENT_URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONArray eventArray = new JSONArray(response);
-                    for (int i = 0; i < eventArray.length(); i++) {
-                        JSONObject eventsJSONObject = eventArray.getJSONObject(i);
-                        String id = eventsJSONObject.getString("id");
-                        String name_event = eventsJSONObject.getString("name_event");
-                        String event_owner = eventsJSONObject.getString("event_owner");
-                        String contact_person = eventsJSONObject.getString("contact_person");
-                        String description = eventsJSONObject.getString("description");
-                        String event_picture = eventsJSONObject.getString("event_picture");
-                        String event_start_date = eventsJSONObject.getString("event_start_date");
-                        String event_end_date = eventsJSONObject.getString("event_end_date");
-                        String price = eventsJSONObject.getString("price");
-                        String location = eventsJSONObject.getString("location");
-                        String category = eventsJSONObject.getString("category");
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, ConfigurationAll.EVENT_URL, response -> {
+            try {
+                JSONArray eventArray = new JSONArray(response);
+                for (int i = 0; i < eventArray.length(); i++) {
+                    JSONObject eventsJSONObject = eventArray.getJSONObject(i);
+                    String id = eventsJSONObject.getString("id");
+                    String name_event = eventsJSONObject.getString("name_event");
+                    String event_owner = eventsJSONObject.getString("event_owner");
+                    String contact_person = eventsJSONObject.getString("contact_person");
+                    String description = eventsJSONObject.getString("description");
+                    String event_picture = eventsJSONObject.getString("event_picture");
+                    String event_start_date = eventsJSONObject.getString("event_start_date");
+                    String event_end_date = eventsJSONObject.getString("event_end_date");
+                    String price = eventsJSONObject.getString("price");
+                    String location = eventsJSONObject.getString("location");
+                    String category = eventsJSONObject.getString("category");
 
-                        Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
-                        events.add(event);
-                    }
-                    EventAdapter eventAdapter = new EventAdapter(events, HomeSeeAllFragment.this);
-                    recyclerViewEvent.setAdapter(eventAdapter);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    Event event = new Event(id, name_event, event_owner, contact_person, description, event_picture, event_start_date, event_end_date, price, location, category);
+                    events.add(event);
                 }
+                EventAdapter eventAdapter = new EventAdapter(events, HomeSeeAllFragment.this);
+                recyclerViewEvent.setAdapter(eventAdapter);
 
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
 
-        Volley.newRequestQueue(getContext()).add(stringRequest);
+        }, error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show());
+
+        Volley.newRequestQueue(requireContext()).add(stringRequest);
     }
 
     // event click
