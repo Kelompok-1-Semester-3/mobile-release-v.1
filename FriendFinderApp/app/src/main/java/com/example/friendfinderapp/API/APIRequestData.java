@@ -47,7 +47,7 @@ public interface APIRequestData {
     Call<List<Event_Model>> resAllUserEvent(@Path("id") String id);
 
     @GET("API/getEventByKeyword/{keyword}")
-    Call<List<Event_Model>> resEventByKeyword(@Path("keyword") String keyword);
+    Call<List<userEvent>> resEventByKeyword(@Path("keyword") String keyword);
 
     @GET("API/getAllCategories")
     Call<List<CategoryModel>> resGetAllCategories();

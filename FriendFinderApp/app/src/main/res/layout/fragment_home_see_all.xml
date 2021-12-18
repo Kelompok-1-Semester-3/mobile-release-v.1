@@ -36,6 +36,14 @@
                 android:text="All Event"
                 android:textColor="@color/black"
                 android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/btn_refresh_event"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_baseline_refresh_24" />
         </RelativeLayout>
 
         // search

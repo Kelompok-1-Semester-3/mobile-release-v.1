@@ -113,27 +113,23 @@ public class UserFragment extends Fragment {
             public void onClick(View v) {
 
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-                dialog.setMessage("Apakah anda yakin akan log Out ? ");
+                dialog.setMessage("Are you sure to leave?");
                 dialog.setCancelable(true);
 
-                DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case DialogInterface.BUTTON_POSITIVE:
-                                SharedPreferences preferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
-                                preferences.edit().clear().commit();
-                                startActivity(new Intent(getContext(), SignIn.class));
-                                Toast.makeText(getActivity(), "LogOut", Toast.LENGTH_SHORT).show();
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                Toast.makeText(getActivity(), "Batal logOut", Toast.LENGTH_SHORT).show();
-                        }
+                DialogInterface.OnClickListener onClickListener = (dialog1, which) -> {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            SharedPreferences preferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+                            preferences.edit().clear().commit();
+                            startActivity(new Intent(getContext(), SignIn.class));
+                            Toast.makeText(getActivity(), "Logout", Toast.LENGTH_SHORT).show();
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            Toast.makeText(getActivity(), "No", Toast.LENGTH_SHORT).show();
                     }
-
                 };
                 dialog.setPositiveButton("Logout", onClickListener);
-                dialog.setNegativeButton("Batal", onClickListener);
+                dialog.setNegativeButton("No", onClickListener);
                 AlertDialog alertDialog = dialog.create();
                 alertDialog.show();
             }

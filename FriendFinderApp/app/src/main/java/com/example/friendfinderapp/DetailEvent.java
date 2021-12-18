@@ -68,7 +68,7 @@ public class DetailEvent extends AppCompatActivity {
 
         contact_owner.setOnClickListener(v -> {
             String phone_number = contact_person.replaceFirst("0", "+62");
-            String message = "Hey%20My%20name%20is%20"+HomeFragment.username+"%0ACan%20i%20join%20your%20event%0AEvent%20name%3A%20"+ event_name +"%0A%0Aps%20%3A%29";
+            String message = "Hey%20My%20name%20is%20"+ConfigurationAll.fullname+"%0ACan%20i%20join%20your%20event%0AEvent%20name%3A%20"+ event_name +"%0A%0Aps%20%3A%29";
             System.out.println(phone_number);
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://api.whatsapp.com/send?phone="+phone_number+
                     "&text=" + message));

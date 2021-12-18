@@ -87,24 +87,21 @@ public class DetailUserEvent extends AppCompatActivity {
 //                kurang refresh
 
                 AlertDialog.Builder dialogPesan = new AlertDialog.Builder(DetailUserEvent.this);
-                dialogPesan.setMessage("Apakah anda yakin akan menghapus Event " + event_name);
+                dialogPesan.setMessage("Are you sure to delete this event : " + event_name + " ?");
                 dialogPesan.setCancelable(true);
 
-                DialogInterface.OnClickListener diaOnClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                DialogInterface.OnClickListener diaOnClickListener = (dialog, which) -> {
 
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                DeletUserEvent();
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                break;
-                        }
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            DeletUserEvent();
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
                     }
                 };
-                dialogPesan.setPositiveButton("Hapus", diaOnClickListener);
-                dialogPesan.setNegativeButton("Cancel", diaOnClickListener);
+                dialogPesan.setPositiveButton("Delete", diaOnClickListener);
+                dialogPesan.setNegativeButton("No", diaOnClickListener);
                 AlertDialog dialog = dialogPesan.create();
                 dialog.show();
             }
