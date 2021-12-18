@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.friendfinderapp.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_homeSeeAllFragment2"
+            app:destination="@id/homeSeeAllFragment2" />
+        <action
+            android:id="@+id/action_homeFragment_to_seeAllPlaceFragment"
+            app:destination="@id/seeAllPlaceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.example.friendfinderapp.EventFragment"
+        android:label="fragment_event"
+        tools:layout="@layout/fragment_event" />
+    <fragment
+        android:id="@+id/userFragment"
+        android:name="com.example.friendfinderapp.UserFragment"
+        android:label="fragment_user"
+        tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/homeSeeAllFragment2"
+        android:name="com.example.friendfinderapp.HomeSeeAllFragment"
+        android:label="fragment_home_see_all"
+        tools:layout="@layout/fragment_home_see_all" />
+    <fragment
+        android:id="@+id/seeAllPlaceFragment"
+        android:name="com.example.friendfinderapp.seeAllPlaceFragment"
+        android:label="fragment_see_all_place"
+        tools:layout="@layout/fragment_see_all_place" />
+</navigation>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="20dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="0dp">
+
+     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/event_id"
+            android:visibility="gone"/>
+
+        // event description
+
+         <RelativeLayout
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentStart="true"
+                 android:layout_centerVertical="true"
+                 android:layout_marginEnd="80dp"
+                 android:orientation="vertical">
+
+                 <TextView
+                     android:id="@+id/txt_place_name"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:fontFamily="@font/poppinssemibold"
+                     android:text="Old Trafford"
+                     android:textColor="@color/black"
+                     android:textSize="14sp" />
+
+                 <TextView
+                     android:id="@+id/txt_place_price"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:drawableStart="@drawable/ic_baseline_label_24"
+                     android:drawablePadding="5dp"
+                     android:fontFamily="@font/poppinssemibold"
+                     android:text="IDR 70000"
+                     android:textColor="@color/darkGrey"
+                     android:textSize="10dp" />
+
+                 <TextView
+                     android:id="@+id/txt_place_time"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:drawableStart="@drawable/ic_baseline_access_time_24"
+                     android:drawablePadding="5dp"
+                     android:fontFamily="@font/poppinssemibold"
+                     android:text="15.00 - 14.00"
+                     android:textColor="@color/darkGrey"
+                     android:textSize="10dp" />
+
+                 <RelativeLayout
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:layout_marginTop="18dp">
+
+                     <androidx.cardview.widget.CardView
+                         android:id="@+id/btn_detail"
+                         android:layout_width="65dp"
+                         android:layout_height="23dp"
+                         android:backgroundTint="@color/blue"
+                         app:cardCornerRadius="4dp"
+                         app:cardElevation="0dp">
+
+                         <LinearLayout
+                             android:layout_width="wrap_content"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:layout_marginHorizontal="8dp"
+                             android:layout_marginVertical="4dp"
+                             android:orientation="horizontal">
+
+                             <TextView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:fontFamily="@font/poppinssemibold"
+                                 android:text="Detail"
+                                 android:textColor="@color/white"
+                                 android:textSize="10dp" />
+
+                             <ImageView
+                                 android:layout_width="15dp"
+                                 android:layout_height="15dp"
+                                 android:layout_gravity="center_vertical"
+                                 android:layout_marginStart="5dp"
+                                 android:src="@drawable/ic_baseline_chevron_right_24" />
+                         </LinearLayout>
+                     </androidx.cardview.widget.CardView>
+                 </RelativeLayout>
+             </LinearLayout>
+
+             <androidx.cardview.widget.CardView
+                 android:layout_centerVertical="true"
+                 android:layout_width="96dp"
+                 android:layout_height="92dp"
+                 android:layout_alignParentEnd="true"
+                 app:cardCornerRadius="12dp"
+                 app:cardElevation="0dp">
+
+                 <ImageView
+                     android:id="@+id/img_place_image"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"
+                     android:scaleType="centerCrop"
+                     android:src="@mipmap/place1" />
+             </androidx.cardview.widget.CardView>
+         </RelativeLayout>
+
+     </LinearLayout>
+
+</androidx.cardview.widget.CardView>

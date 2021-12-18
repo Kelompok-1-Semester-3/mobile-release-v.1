@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="20dp">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="225dp"
+        android:layout_height="310dp"
+        android:backgroundTint="@color/subtleGrey"
+        android:elevation="200dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            // event image
+
+            <ImageView
+                android:id="@+id/img_thumbnail_place_image"
+                android:layout_width="match_parent"
+                android:layout_height="152dp"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/place1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                android:orientation="vertical">
+                // event name
+
+                <TextView
+                    android:id="@+id/txt_thumbnail_place_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinsbold"
+                    android:text="Lapangan Antaraja"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+
+                // Road name
+
+                <TextView
+                    android:id="@+id/txt_thumbnail_place_road"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:text="Jl. Sudirman"
+                    android:textColor="@color/darkGrey"
+                    android:textSize="12dp" />
+                // price
+
+                <TextView
+                    android:id="@+id/txt_thumbnail_place_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppinssemibold"
+                    android:text="40K/Jam"
+                    android:textColor="@color/blue"
+                    android:textSize="12dp" />
+
+                // date
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal">
+                        // detail button
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="33dp"
+                            android:layout_alignParentBottom="true"
+                            android:backgroundTint="@color/colorPrimaryDark"
+                            app:cardCornerRadius="4dp"
+                            app:cardElevation="0dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginHorizontal="8dp"
+                                android:layout_marginVertical="4dp"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:fontFamily="@font/poppinssemibold"
+                                    android:text="Detail Place"
+                                    android:textColor="@color/white"
+                                    android:textSize="12dp" />
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_marginStart="5dp"
+                                    android:src="@drawable/ic_baseline_chevron_right_24" />
+                            </LinearLayout>
+                        </androidx.cardview.widget.CardView>
+                        // rating
+
+<!--                        <RelativeLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent">-->
+
+<!--                            <RatingBar-->
+<!--                                android:layout_alignParentEnd="true"-->
+<!--                                android:layout_centerVertical="true"-->
+<!--                                android:theme="@style/myRating"-->
+<!--                                style="@style/Widget.AppCompat.RatingBar.Small"-->
+<!--                                android:layout_width="wrap_content"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:rating="5" />-->
+<!--                        </RelativeLayout>-->
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
